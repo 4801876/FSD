@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>AngularJS Addition Example</title>
+        <script
+            src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    </head>
+    <body ng-controller="myController"
+        ng-init="num1=0; num2=0; result=0; showResult=false; disabled=false">
+
+        <h1>Addition of Two Numbers</h1>
+
+        <!-- Input fields for numbers -->
+        <div>
+            <label>Number 1:</label>
+            <input type="number" ng-model="num1">
+        </div>
+
+        <div>
+            <label>Number 2:</label>
+            <input type="number" ng-model="num2">
+        </div>
+
+        <button
+            ng-click="addNumbers()"
+            ng-disabled="disabled"
+            ng-show="true">Add Numbers</button>
+
+        <div ng-show="showResult">
+            <h2>Result: <span ng-bind="result"></span></h2>
+        </div>
+
+        <div>
+            <button ng-click="disabled = !disabled">
+                {{ disabled ? 'Enable Add Button' : 'Disable Add Button' }}
+            </button>
+        </div>
+
+        <script>
+        // Define the AngularJS module and controller
+        angular.module('myApp', [])
+            .controller('myController', ['$scope', function ($scope) {
+                // Function to perform addition
+                $scope.addNumbers = function () {
+                    $scope.result = parseFloat($scope.num1) + parseFloat($scope.num2);
+                    $scope.showResult = true;
+                };
+            }]);
+    </script>
+    </body>
+</html>

@@ -1,0 +1,62 @@
+ng new student-score-app
+cd student-score-app
+ng generate component student-list
+
+student-list.component.ts
+import { Component } from '@angular/core';
+
+interface Student {
+  name: string;
+  score: number;
+}
+
+@Component({
+  selector: 'app-student-list',
+  templateUrl: './student-list.component.html',
+  styleUrls: ['./student-list.component.css']
+})
+export class StudentListComponent {
+  students: Student[] = [
+    { name: 'John Doe', score: 88 },
+    { name: 'Jane Smith', score: 92 },
+    { name: 'Sam Brown', score: 84 },
+    { name: 'Lisa Johnson', score: 85 }
+  ];
+
+  highScorers: string[] = this.students
+    .filter(student => student.score >= 85)
+    .map(student => student.name);
+}
+
+student-list.component.html
+<div>
+  <h2>Students Who Scored 85% or More</h2>
+  <ul>
+    <li *ngFor="let student of highScorers">{{ student }}</li>
+  </ul>
+</div>
+
+app.module.ts
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { AppComponent } from './app.component';
+import { StudentListComponent } from './student-list/student-list.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    StudentListComponent
+  ],
+  imports: [
+    BrowserModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+app.component.html
+<app-student-list></app-student-list>
+
+ng serve

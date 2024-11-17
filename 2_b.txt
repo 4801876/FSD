@@ -1,0 +1,105 @@
+npm install -g @angular/cli
+
+ng new angular-http-demo
+cd angular-http-demo
+
+npm install
+
+src/app/app.module.ts
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+
+import { AppComponent } from './app.component';
+import { DataComponent } from './data/data.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    DataComponent
+  ],
+  imports: [
+    BrowserModule,
+    HttpClientModule // Import HttpClientModule here
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+ng generate service services/data
+
+src/app/services/data.service.ts
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DataService {
+
+  private apiUrl = 'https://jsonplaceholder.typicode.com/posts'; // Example API
+
+  constructor(private http: HttpClient) { }
+
+  // Method to fetch data
+  getData(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
+  }
+}
+
+ng generate component data
+
+
+src/app/data/data.component.ts
+import { Component, OnInit } from '@angular/core';
+import { DataService } from '../services/data.service';
+
+@Component({
+  selector: 'app-data',
+  templateUrl: './data.component.html',
+  styleUrls: ['./data.component.css']
+})
+export class DataComponent implements OnInit {
+
+  posts: any[] = []; // To store the fetched data
+
+  constructor(private dataService: DataService) { }
+
+  ngOnInit(): void {
+    // Fetch data when the component initializes
+    this.dataService.getData().subscribe(
+      (data) => {
+        this.posts = data;
+      },
+      (error) => {
+        console.error('Error fetching data', error);
+      }
+    );
+  }
+}
+
+src/app/data/data.component.html
+<h1>Posts from API</h1>
+<table border="1">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Title</th>
+      <th>Body</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let post of posts">
+      <td>{{ post.id }}</td>
+      <td>{{ post.title }}</td>
+      <td>{{ post.body }}</td>
+    </tr>
+  </tbody>
+</table>
+
+src/app/app.component.html
+<app-data></app-data>
+
+ng serve

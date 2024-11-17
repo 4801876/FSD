@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="employeeApp">
+<head>
+  <meta charset="UTF-8">
+  <title>Employee Details</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <style>
+    table {
+      width:100%;
+      border-collapse: collapse;
+    }
+    table, th, td {
+      border: 1px solid black;
+    }
+    th, td {
+      padding: 8px;
+      text-align: left;
+    }
+  </style>
+</head>
+<body ng-controller="EmployeeController">
+
+  <h1>Employee Details</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Employee Name</th>
+        <th>Employee ID</th>
+        <th>Pin Code</th>
+        <th>Address</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="employee in employees">
+        <td>{{employee.name}}</td>
+        <td>{{employee.id}}</td>
+        <td>{{employee.pin}}</td>
+        <td>{{employee.address}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <script>
+    // Define the AngularJS application module
+    angular.module('employeeApp', [])
+      .controller('EmployeeController', function($scope) {
+        // Define the employees array
+        $scope.employees = [
+          {name: 'John Doe', id: 'E001', pin: '123456', address: '1234 Elm St, Springfield'},
+          {name: 'Jane Smith', id: 'E002', pin: '654321', address: '5678 Oak St, Springfield'},
+          {name: 'Emily Johnson', id: 'E003', pin: '789012', address: '9101 Maple St, Springfield'}
+        ];
+      });
+  </script>
+
+</body>
+</html>

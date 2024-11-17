@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>AngularJS ng-repeat Example</title>
+        <script
+            src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    </head>
+    <body ng-app="companyApp" ng-controller="CompanyController">
+
+        <h2>List of Companies</h2>
+
+        <table border="1" cellpadding="5">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Workforce</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="company in companies">
+                    <td>{{ company.id }}</td>
+                    <td>{{ company.name }}</td>
+                    <td>{{ company.workforce }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <script>
+       
+        var app = angular.module('companyApp', []);
+
+       
+        app.controller('CompanyController', ['$scope', function ($scope) {
+           
+            $scope.companies = [
+                { id: 1, name: "Tech Solutions", workforce: 25 },
+                { id: 2, name: "Innovatech", workforce: 50 },
+                { id: 3, name: "FutureSoft", workforce: 15 },
+                { id: 4, name: "CodeFactory", workforce: 40 },
+            ];
+        }]);
+    </script>
+    </body>
+</html>

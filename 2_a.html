@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="bankApp">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Bank Details</title>
+        <script
+            src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+        <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+    </head>
+    <body ng-controller="bankController">
+
+        <h1>Bank Details</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Bank Name</th>
+                    <th>MICR Code</th>
+                    <th>IFC Code</th>
+                    <th>Address</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="bank in banks">
+                    <td>{{ bank.name }}</td>
+                    <td>{{ bank.micr }}</td>
+                    <td>{{ bank.ifsc }}</td>
+                    <td>{{ bank.address }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <script>
+        const app = angular.module('bankApp', []);
+
+        app.controller('bankController', ['$scope', function ($scope) {
+            $scope.banks = [
+                {
+                    name: 'State Bank of India',
+                    micr: '110002103',
+                    ifsc: 'SBIN0007106',
+                    address: 'Connaught Place, New Delhi'
+                },
+                {
+                    name: 'HDFC Bank',
+                    micr: '400240003',
+                    ifsc: 'HDFC0000003',
+                    address: 'Fort, Mumbai'
+                },
+                {
+                    name: 'ICICI Bank',
+                    micr: '110229003',
+                    ifsc: 'ICIC0000039',
+                    address: 'Janpath, New Delhi'
+                },
+                {
+                    name: 'Axis Bank',
+                    micr: '560211005',
+                    ifsc: 'UTIB0000001',
+                    address: 'MG Road, Bangalore'
+                }
+            ];
+        }]);
+    </script>
+
+    </body>
+</html>

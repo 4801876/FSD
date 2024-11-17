@@ -1,0 +1,80 @@
+ng new my-api-app
+cd my-api-app
+
+app.module.ts
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { AppComponent } from './app.component';
+import { ApiService } from './api.service';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    HttpClientModule
+  ],
+  providers: [ApiService],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+api.service.ts
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ApiService {
+  private apiUrl = 'https://api.example.com/data'; // Replace with your API endpoint
+
+  constructor(private http: HttpClient) {}
+
+  getData(): Observable<any> {
+    return this.http.get<any>(this.apiUrl);
+  }
+}
+
+ng generate component data-display
+
+data-display.component.ts
+import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../api.service';
+
+@Component({
+  selector: 'app-data-display',
+  templateUrl: './data-display.component.html',
+  styleUrls: ['./data-display.component.css']
+})
+export class DataDisplayComponent implements OnInit {
+  data: any;
+
+  constructor(private apiService: ApiService) {}
+
+  ngOnInit() {
+    this.apiService.getData().subscribe(response => {
+      this.data = response;
+    });
+  }
+}
+
+
+data-display.component.html
+<div *ngIf="data">
+  <h2>API Data</h2>
+  <pre>{{ data | json }}</pre>
+</div>
+<div *ngIf="!data">
+  <p>Loading data...</p>
+</div>
+
+
+app.component.html
+<app-data-display></app-data-display>
+
+ng serve

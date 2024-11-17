@@ -1,0 +1,54 @@
+ng new my-app
+cd my-app
+ng generate component input-display
+
+input-display.component.ts
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-input-display',
+  templateUrl: './input-display.component.html',
+  styleUrls: ['./input-display.component.css']
+})
+export class InputDisplayComponent {
+  userInput: string = '';
+
+  constructor() {}
+}
+
+input-display.component.html:
+
+<div>
+  <label for="inputField">Enter something: </label>
+  <input id="inputField" type="text" [(ngModel)]="userInput" placeholder="Type here...">
+</div>
+<div>
+  <h3>You entered: {{ userInput }}</h3>
+</div>
+
+
+app.module.ts
+
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { AppComponent } from './app.component';
+import { InputDisplayComponent } from './input-display/input-display.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    InputDisplayComponent
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+app.component.html
+<app-input-display></app-input-display>

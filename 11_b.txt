@@ -1,0 +1,65 @@
+ng new student-app
+cd student-app
+ng generate component student-list
+
+
+student-list.component.ts:
+import { Component } from '@angular/core';
+
+interface Student {
+  name: string;
+  sport: string;
+}
+
+@Component({
+  selector: 'app-student-list',
+  templateUrl: './student-list.component.html',
+  styleUrls: ['./student-list.component.css']
+})
+export class StudentListComponent {
+  students: Student[] = [
+    { name: 'John Doe', sport: 'Basketball' },
+    { name: 'Jane Smith', sport: 'Soccer' },
+    { name: 'Sam Brown', sport: 'Basketball' },
+    { name: 'Lisa Johnson', sport: 'Volleyball' }
+  ];
+
+  basketballPlayers: string[] = this.students
+    .filter(student => student.sport === 'Basketball')
+    .map(student => student.name);
+}
+
+student-list.component.html
+<div>
+  <h2>Students Who Play Basketball</h2>
+  <ul>
+    <li *ngFor="let player of basketballPlayers">{{ player }}</li>
+  </ul>
+</div>
+
+
+app.module.ts
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { AppComponent } from './app.component';
+import { StudentListComponent } from './student-list/student-list.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    StudentListComponent
+  ],
+  imports: [
+    BrowserModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+app.component.html
+<app-student-list></app-student-list>
+
+
+ng serve
